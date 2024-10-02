@@ -4,7 +4,7 @@ import sys # for exit() method
 inputfiles = {
         "HOPS-17":  ['line.ms', 'line.ms', 'line.ms'],
         "HOPS-18":  ['line.ms', 'line.ms', 'line.ms'],
-        "HOPS-29":  ['line.ms', 'line.ms', 'line.ms'], # cambiar lo demas por esto
+        "HOPS-29":  ['line.ms', 'line.ms', 'line.ms'], # cambiar lo demas por esto, ignora linea del CO
         "HOPS-30":  '05:34:44.0640 -05.41.25.800',
         "HOPS-43":  '05:35:04.5119 -05.35.14.279',
         "HOPS-71":  '05:35:25.6080 -05.07.57.360',
@@ -21,8 +21,8 @@ inputfiles = {
 source_names = ['name', 'of', 'the', 'source', 'parallel', 'to', 'inputfiles', ...] # Format HOPS-xyz
 
 spws = { # for 7m array
-        "13CO" = ['0~6,8~21', '0-21'],
-        "C18O"   = ['0~6,8~21' '0-21']
+        "13CO" = ['0~6,8~21', '0~21'],
+        "C18O" = ['0~6,8~21', '0~21']
 }
 
 restfrq_dictionary = { # MHz
@@ -61,37 +61,51 @@ def auto_mkdir(source_name): # helps with the imagename parameter automatization
     if   source_name == 'HOPS-17':
         return 'DIRTY_H17'
     elif source_name == 'HOPS-18':
-        return 'CLEAN_H18'
+        return 'DIRTY_H18'
     elif source_name == 'HOPS-29':
-        return 'CLEAN_H29'
+        return 'DIRTY_H29'
     elif source_name == 'HOPS-30':
-        return 'CLEAN_H30'
+        return 'DIRTY_H30'
     elif source_name == 'HOPS-43':
-        return 'CLEAN_H43'
+        return 'DIRTY_H43'
     elif source_name == 'HOPS-71':
-        return 'CLEAN_H71'
+        return 'DIRTY_H71'
     elif source_name == 'HOPS-133':
-        return 'CLEAN_H133'
+        return 'DIRTY_H133'
     elif source_name == 'HOPS-139':
-        return 'CLEAN_H139'
+        return 'DIRTY_H139'
     elif source_name == 'HOPS-140':
-        return 'CLEAN_H140'
+        return 'DIRTY_H140'
     elif source_name == 'HOPS-145':
-        return 'CLEAN_H145'
+        return 'DIRTY_H145'
     elif source_name == 'HOPS-156':
-        return 'CLEAN_H156'
+        return 'DIRTY_H156'
     elif source_name == 'HOPS-160':
-        return 'CLEAN_H160'
+        return 'DIRTY_H160'
     elif source_name == 'HOPS-163':
-        return 'CLEAR_H163'
+        return 'DIRTY_H163'
     elif source_name == 'HOPS-189':
-        return 'CLEAR_H189'
+        return 'DIRTY_H189'
     elif source_name == 'HOPS-193':
-        return 'CLEAR_H193'
+        return 'DIRTY_H193'
     else:
         print(source_name + ' is not valid source, try checking the source_names list in the source code of this script with a text editor or IDE.')
         sys.exit()
-      
+
+def get_coordinate(source):
+        coordinates = coordinate_dictionary[source]
+        phasecenter= "ICRS " + coordinates
+        return str(phasecenter)
+        
+abnormal_spw = ["HOPS-30","HOPS-140","HOPS-156","HOPS-160","HOPS-163"]
+
+def get_spw(source, line):
+        if source not in abnormal_spw:
+                return spws[line][0]
+        else:
+                return spws[line][1]
+        
+        
 #def data_input():
  #   CELL = '1.00arcsec'
  #   NCHAN = 1024
@@ -99,8 +113,19 @@ def auto_mkdir(source_name): # helps with the imagename parameter automatization
  #   Vmin = # Vmin
  #   width = -((Vmax + Vmin)/nchan) # Vmin must be written in positive
  #   array = '7m'
-
-for i in inputfiles:
+def dirty_tclean(line)
+        for source, i in inputfiles.items(): #source tiene el key (el nombre de la lista) en ese momento, i contiene el valor de los elementos (las listas en si)
+                dir = auto_mkdir(source)
+                phasecenter = get_coordinate(source)
+                spw = get_spw(source, line)
+                restfrq = restfrq_dictionary[source]
+                tclean_output = dir + '/' + source + '_7m_' + line + '_contsub_cube'
+                for ms in i:
+                        vis = ms
+                        
+                
+                
+for i in inputfiles: 
     visibility = inputfiles[i][1] # numero corresponde al subindice de la lista de measurement sets de las fuentes del diccionario "inputfiles"
     tclean_output = auto_mkdir(i) + '/' + i + '_' + array + '_' + line + '_contsub_cube'
 
