@@ -125,7 +125,7 @@ def dirty_tclean(line)
                         
                 
                 
-for i in inputfiles: 
-    visibility = inputfiles[i][1] # numero corresponde al subindice de la lista de measurement sets de las fuentes del diccionario "inputfiles"
-    tclean_output = auto_mkdir(i) + '/' + i + '_' + array + '_' + line + '_contsub_cube'
+# for i in inputfiles: 
+    # visibility = inputfiles[i][1] # numero corresponde al subindice de la lista de measurement sets de las fuentes del diccionario "inputfiles"
+    # tclean_output = auto_mkdir(i) + '/' + i + '_' + array + '_' + line + '_contsub_cube'
 
