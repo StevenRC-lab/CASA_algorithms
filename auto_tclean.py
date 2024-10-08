@@ -2,9 +2,9 @@
 import sys # for exit() method
 
 inputfiles = {
-        "HOPS-17":  ['line.ms', 'line.ms', 'line.ms'],
-        "HOPS-18":  ['line.ms', 'line.ms', 'line.ms'],
-        "HOPS-29":  ['line.ms', 'line.ms', 'line.ms'], # cambiar lo demas por esto, ignora linea del CO
+        "HOPS-17":  ['HOPS_17_7m_13CO_2-1.ms', 'HOPS_17_7m_C18O_2-1.ms'],
+        "HOPS-18":  ['HOPS_18_7m_13CO_2-1.ms', 'HOPS_18_7m_C18O_2-1.ms'],
+        "HOPS-29":  ['HOPS_29_7m_13CO_2-1.ms', 'line.ms', 'line.ms'], # cambiar lo demas por esto, ignora linea del CO
         "HOPS-30":  '05:34:44.0640 -05.41.25.800',
         "HOPS-43":  '05:35:04.5119 -05.35.14.279',
         "HOPS-71":  '05:35:25.6080 -05.07.57.360',
@@ -47,6 +47,8 @@ coordiate_dictionary = { # LSRK
         "HOPS-189": '05:35:30.8879 -06.26.31.919',
         "HOPS-193": '05:36:30.2639 -06.01.17.399'
 }
+
+
 
 def wait_completion(): # checks that the task is completed before going to the next source or line
     log_file=casalog.logfile()
@@ -105,7 +107,6 @@ def get_spw(source, line):
         else:
                 return spws[line][1]
         
-        
 #def data_input():
  #   CELL = '1.00arcsec'
  #   NCHAN = 1024
@@ -113,17 +114,33 @@ def get_spw(source, line):
  #   Vmin = # Vmin
  #   width = -((Vmax + Vmin)/nchan) # Vmin must be written in positive
  #   array = '7m'
+
+other_parateters = { # para toda fuente en este diccionario, cada subindice representa: [0] = start, [1] = vmin, [2] = width
+        "13CO" : [42, 42, -0.082],
+        "C180" : [42.5, 42.5, -0.082]
+        
+}
 def dirty_tclean(line)
         for source, i in inputfiles.items(): #source tiene el key (el nombre de la lista) en ese momento, i contiene el valor de los elementos (las listas en si)
-                dir = auto_mkdir(source)
-                phasecenter = get_coordinate(source)
-                spw = get_spw(source, line)
-                restfrq = restfrq_dictionary[source]
-                tclean_output = dir + '/' + source + '_7m_' + line + '_contsub_cube'
+                restfrq = restfrq_dictionary[line]
+                cell = '1.0arcsec'
+                imsize = '100'
+                nchan = 1024
+                start = other_parameters[line][0]
+                width = other_parameters[line][2]
                 for ms in i:
                         vis = ms
-                        
-                
+                        dir = auto_mkdir(source)
+                        phasecenter = get_coordinate(source)
+                        spw = get_spw(source, line)
+                        prename = dir + '/' + source + '_7m_' + line + '_contsub_cube'
+                        tclean(vis=vis,imagename=prename + '_dirty',gridder='mosaic',deconvolver='hogbom',pbmask=minpb,imsize=imsize,cell=cell,spw=spw,weighting='briggsbwtaper',
+                               robust=0.5,phasecenter =phasecenter,specmode='cube',width=width,start=start,nchan=nchan,restfreq=restfreq,outframe='LSRK',veltype='radio',restoringbeam='common',mask='',
+                               niter=0,interactive=False)
+line = str(input("Enter line, only 13CO available: "))
+
+dirty_tclean(line)
+
                 
 # for i in inputfiles: 
     # visibility = inputfiles[i][1] # numero corresponde al subindice de la lista de measurement sets de las fuentes del diccionario "inputfiles"
