@@ -116,8 +116,8 @@ def get_spw(source, line):
  #   array = '7m'
 
 other_parateters = { # para toda fuente en este diccionario, cada subindice representa: [0] = start, [1] = vmin, [2] = width
-        "13CO" : [42, 42, -0.082],
-        "C180" : [42.5, 42.5, -0.082]
+        "13CO" : [42, 42, -0.0825],
+        "C180" : [42.5, 42.5, -0.0825]
         
 }
 def dirty_tclean(line)
