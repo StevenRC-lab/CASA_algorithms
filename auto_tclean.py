@@ -1,15 +1,16 @@
 # auto tclean for dirty cube
 import sys # for exit() method
+import time
 
-inputfiles = {
-        "HOPS-17":  ['HOPS_17_7m_13CO_2-1.ms', 'HOPS_17_7m_C18O_2-1.ms'],
-        "HOPS-18":  ['HOPS_18_7m_13CO_2-1.ms', 'HOPS_18_7m_C18O_2-1.ms'],
-        "HOPS-29":  ['HOPS_29_7m_13CO_2-1.ms', 'line.ms', 'line.ms'], # cambiar lo demas por esto, ignora linea del CO
-        "HOPS-30":  '05:34:44.0640 -05.41.25.800',
-        "HOPS-43":  '05:35:04.5119 -05.35.14.279',
-        "HOPS-71":  '05:35:25.6080 -05.07.57.360',
-        "HOPS-133": '05:39:05.8319 -07.10.39.359',
-        "HOPS-139": '05:38:49.6080 -07.01.17.760',
+inputfiles = { # source = "x": i = [x,y,z]
+        "HOPS-17":  ['HOPS_17_7m_13CO_2-1.ms'], # 'HOPS_17_7m_C18O_2-1.ms'],
+        "HOPS-18":  ['HOPS_18_7m_13CO_2-1.ms'], # 'HOPS_18_7m_C18O_2-1.ms'],
+        "HOPS-29":  ['HOPS_29_7m_13CO_2-1.ms'], # cambiar lo demas por esto, ignora linea del CO
+        "HOPS-30":  ['HOPS-30_7m_13CO_2-1_autosplit.ms'],
+        "HOPS-43":  ['HOPS-43_7m_13CO_2-1_autosplit.ms'],
+        "HOPS-71":  ['HOPS-71_7m_13CO_2-1_autosplit.ms'],
+        "HOPS-133": ['HOPS-133_7m_13CO_2-1_autosplit.ms'],
+        "HOPS-139": ['HOPS-139_7m_13CO_2-1_autosplit.ms'],
         "HOPS-140": '05:38:46.2720 -07.01.53.400',
         "HOPS-145": '05:38:43.8479 -07.01.13.079',
         "HOPS-156": '05:38:03.4080 -06.58.15.959',
@@ -18,19 +19,19 @@ inputfiles = {
         "HOPS-189": '05:35:30.8879 -06.26.31.919',
         "HOPS-193": '05:36:30.2639 -06.01.17.399'
 }
-source_names = ['name', 'of', 'the', 'source', 'parallel', 'to', 'inputfiles', ...] # Format HOPS-xyz
+# source_names = ['name', 'of', 'the', 'source', 'parallel', 'to', 'inputfiles', ...] # Format HOPS-xyz
 
 spws = { # for 7m array
-        "13CO" = ['0~6,8~21', '0~21'],
-        "C18O" = ['0~6,8~21', '0~21']
+        "13CO" : ['0~6,8~21', '0~21'],
+        "C18O" : ['0~6,8~21', '0~21']
 }
 
-restfrq_dictionary = { # MHz
-        "13CO" : '220398,6842',
-        "C18O" : '219560,358',
-        "CO"   : '230538'
+restfrq_dictionary = { # GHz, 
+        "13CO" : '220.3986842GHz',
+        "C18O" : '219.560358GHz',
+        "CO"   : '230.538000GHz'
 }
-coordiate_dictionary = { # LSRK
+coordinate_dictionary = { # LSRK
         "HOPS-17":  '05:35:07.1759 -05.52.05.879',
         "HOPS-18":  '05:35:05.4960 -05.51.54.359',
         "HOPS-29":  '05:34:49.0560 -05.41.42.000',
@@ -50,15 +51,16 @@ coordiate_dictionary = { # LSRK
 
 
 
-def wait_completion(): # checks that the task is completed before going to the next source or line
+def wait_completion(): # checks that the task is completed before going to the next source or line, usa readline
     log_file=casalog.logfile()
     with open(log_file, 'r') as f:
-        log_content=f.read()
+        log_content=f.read() # O(n)
 
     while f'End Task: tclean' not in log_content:
         time.sleep(10) # 10 secs
         with open(log_file,'r') as f:
             log_content = f.read()
+
 def auto_mkdir(source_name): # helps with the imagename parameter automatization by formatting the name of the directory in which the tclean output will be placed.
     if   source_name == 'HOPS-17':
         return 'DIRTY_H17'
@@ -96,9 +98,9 @@ def auto_mkdir(source_name): # helps with the imagename parameter automatization
 
 def get_coordinate(source):
         coordinates = coordinate_dictionary[source]
-        phasecenter= "ICRS " + coordinates
+        phasecenter= 'ICRS ' + coordinates
         return str(phasecenter)
-        
+
 abnormal_spw = ["HOPS-30","HOPS-140","HOPS-156","HOPS-160","HOPS-163"]
 
 def get_spw(source, line):
@@ -106,7 +108,7 @@ def get_spw(source, line):
                 return spws[line][0]
         else:
                 return spws[line][1]
-        
+
 #def data_input():
  #   CELL = '1.00arcsec'
  #   NCHAN = 1024
@@ -115,34 +117,34 @@ def get_spw(source, line):
  #   width = -((Vmax + Vmin)/nchan) # Vmin must be written in positive
  #   array = '7m'
 
-other_parateters = { # para toda fuente en este diccionario, cada subindice representa: [0] = start, [1] = vmin, [2] = width
-        "13CO" : [42, 42, -0.0825],
-        "C180" : [42.5, 42.5, -0.0825]
-        
+other_parameters = { # para toda fuente en este diccionario, cada subindice representa: [0] = start, [1] = vmin, [2] = width
+        "13CO" : ['50km/s', '34km/s', '-0.08225km/s'],
+        "C180" : ['42.5km/s', '42.5km/s', '-0.08225km/s']
+
 }
-def dirty_tclean(line)
+def dirty_tclean(line):
+        minpb = 0.2
+        cell = '1.0arcsec'
+        imsize = 100
+        nchan = 1016
+        start = other_parameters[line][0]
+        width = other_parameters[line][2]
+
         for source, i in inputfiles.items(): #source tiene el key (el nombre de la lista) en ese momento, i contiene el valor de los elementos (las listas en si)
-                restfrq = restfrq_dictionary[line]
-                cell = '1.0arcsec'
-                imsize = '100'
-                nchan = 1024
-                start = other_parameters[line][0]
-                width = other_parameters[line][2]
+                restfreq = restfrq_dictionary[line]
+
                 for ms in i:
                         vis = ms
                         dir = auto_mkdir(source)
                         phasecenter = get_coordinate(source)
                         spw = get_spw(source, line)
-                        prename = dir + '/' + source + '_7m_' + line + '_contsub_cube'
+                        prename = dir + '/' + source + '_7m_' + line + 'auto_contsub_cube'
                         tclean(vis=vis,imagename=prename + '_dirty',gridder='mosaic',deconvolver='hogbom',pbmask=minpb,imsize=imsize,cell=cell,spw=spw,weighting='briggsbwtaper',
-                               robust=0.5,phasecenter =phasecenter,specmode='cube',width=width,start=start,nchan=nchan,restfreq=restfreq,outframe='LSRK',veltype='radio',restoringbeam='common',mask='',
+                               robust=0.5,phasecenter=phasecenter,specmode='cube',width=width,start=start,nchan=nchan,restfreq=restfreq,outframe='LSRK',veltype='radio',restoringbeam='common',mask='',
                                niter=0,interactive=False)
+                        wait_completion()
+
 line = str(input("Enter line, only 13CO available: "))
 
 dirty_tclean(line)
-
-                
-# for i in inputfiles: 
-    # visibility = inputfiles[i][1] # numero corresponde al subindice de la lista de measurement sets de las fuentes del diccionario "inputfiles"
-    # tclean_output = auto_mkdir(i) + '/' + i + '_' + array + '_' + line + '_contsub_cube'
 
