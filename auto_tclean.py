@@ -11,17 +11,17 @@ inputfiles = { # source = "x": i = [x,y,z]
         "HOPS-71":  ['HOPS-71_7m_13CO_2-1_autosplit.ms'],
         "HOPS-133": ['HOPS-133_7m_13CO_2-1_autosplit.ms'],
         "HOPS-139": ['HOPS-139_7m_13CO_2-1_autosplit.ms'],
-        "HOPS-140": '05:38:46.2720 -07.01.53.400',
-        "HOPS-145": '05:38:43.8479 -07.01.13.079',
-        "HOPS-156": '05:38:03.4080 -06.58.15.959',
-        "HOPS-160": '05:37:51.0480 -06.47.20.399',
-        "HOPS-163": '05:37:17.2799 -06.36.18.360',
-        "HOPS-189": '05:35:30.8879 -06.26.31.919',
-        "HOPS-193": '05:36:30.2639 -06.01.17.399'
+        "HOPS-140": ['HOPS-140_7M_13CO2-1.ms'],
+        "HOPS-145": ['HOPS-145_7M_13CO2-1.ms'],
+        "HOPS-156": ['HOPS-156_7M_13CO2-1.ms'],
+        "HOPS-160": ['HOPS-160_7m_13CO2-1_autosplitv2.ms'],
+        "HOPS-163": ['HOPS-163_7m_13CO2-1_autosplitv2.ms'],
+        "HOPS-189": ['HOPS-189_7m_13CO2-1_autosplitv2.ms'],
+        "HOPS-193": ['HOPS-193_7m_13CO2-1_autosplitv2.ms']
 }
 # source_names = ['name', 'of', 'the', 'source', 'parallel', 'to', 'inputfiles', ...] # Format HOPS-xyz
 
-spws = { # for 7m array
+spws = { # for 7m array, abnormal spws in [1]
         "13CO" : ['0~6,8~21', '0~21'],
         "C18O" : ['0~6,8~21', '0~21']
 }
@@ -124,8 +124,8 @@ other_parameters = { # para toda fuente en este diccionario, cada subindice repr
 }
 def dirty_tclean(line):
         minpb = 0.2
-        cell = '1.0arcsec'
-        imsize = 100
+        cell = '0.89arcsec'
+        imsize = 120
         nchan = -1  # 1016
         start = ''  # other_parameters[line][0]
         width = ''  # other_parameters[line][2]
@@ -135,7 +135,7 @@ def dirty_tclean(line):
 
                 for ms in i:
                         vis = ms
-                        dir = auto_mkdir(source)
+                        dir = auto_mkdir(source) + "_"+ source
                         phasecenter = get_coordinate(source)
                         spw = get_spw(source, line)
                         prename = dir + '/' + source + '_7m_' + line + 'auto_contsub_cube'
