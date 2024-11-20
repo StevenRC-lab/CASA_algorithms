@@ -126,9 +126,9 @@ def dirty_tclean(line):
         minpb = 0.2
         cell = '0.89arcsec'
         imsize = 120
-        nchan = -1  # 1016
-        start = ''  # other_parameters[line][0]
-        width = ''  # other_parameters[line][2]
+        nchan =  1016 # -1
+        start =  other_parameters[line][0] # ''
+        width =  other_parameters[line][2] # ''
 
         for source, i in inputfiles.items(): #source tiene el key (el nombre de la lista) en ese momento, i contiene el valor de los elementos (las listas en si)
                 restfreq = restfrq_dictionary[line]
