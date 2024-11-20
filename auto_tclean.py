@@ -135,7 +135,7 @@ def dirty_tclean(line):
 
                 for ms in i:
                         vis = ms
-                        dir = auto_mkdir(source) + "_"+ source
+                        dir = auto_mkdir(source) + "_" + line
                         phasecenter = get_coordinate(source)
                         spw = get_spw(source, line)
                         prename = dir + '/' + source + '_7m_' + line + 'auto_contsub_cube'
