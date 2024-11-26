@@ -3,27 +3,43 @@ import sys # for exit() method
 import time
 
 inputfiles = { # source = "x": i = [x,y,z]
-        "HOPS-17":  ['HOPS_17_7m_13CO_2-1.ms'], # 'HOPS_17_7m_C18O_2-1.ms'],
-        "HOPS-18":  ['HOPS_18_7m_13CO_2-1.ms'], # 'HOPS_18_7m_C18O_2-1.ms'],
-        "HOPS-29":  ['HOPS_29_7m_13CO_2-1.ms'], # cambiar lo demas por esto, ignora linea del CO
-        "HOPS-30":  ['HOPS-30_7m_13CO_2-1_autosplit.ms'],
-        "HOPS-43":  ['HOPS-43_7m_13CO_2-1_autosplit.ms'],
-        "HOPS-71":  ['HOPS-71_7m_13CO_2-1_autosplit.ms'],
-        "HOPS-133": ['HOPS-133_7m_13CO_2-1_autosplit.ms'],
-        "HOPS-139": ['HOPS-139_7m_13CO_2-1_autosplit.ms'],
-        "HOPS-140": ['HOPS-140_7M_13CO2-1.ms'],
-        "HOPS-145": ['HOPS-145_7M_13CO2-1.ms'],
-        "HOPS-156": ['HOPS-156_7M_13CO2-1.ms'],
-        "HOPS-160": ['HOPS-160_7m_13CO2-1_autosplitv2.ms'],
-        "HOPS-163": ['HOPS-163_7m_13CO2-1_autosplitv2.ms'],
-        "HOPS-189": ['HOPS-189_7m_13CO2-1_autosplitv2.ms'],
-        "HOPS-193": ['HOPS-193_7m_13CO2-1_autosplitv2.ms']
+        "HOPS-17":  ['HOPS_17_7m_CO_2-1.ms'], # 'HOPS_17_7m_C18O_2-1.ms'],
+        "HOPS-18":  ['HOPS_18_7m_CO_2-1.ms'], # 'HOPS_18_7m_C18O_2-1.ms'],
+        "HOPS-29":  ['HOPS_29_7m_CO_2-1.ms'], # cambiar lo demas por esto, ignora linea del CO
+        "HOPS-30":  ['HOPS-30_7m_CO_2-1_autosplit.ms'],
+        "HOPS-43":  ['HOPS-43_7m_CO_2-1_autosplit.ms'],
+        "HOPS-71":  ['HOPS-71_7m_CO_2-1_autosplit.ms'],
+        "HOPS-133": ['HOPS-133_7m_CO_2-1_autosplit.ms'],
+        "HOPS-139": ['HOPS-139_7m_CO_2-1_autosplit.ms'],
+        "HOPS-140": ['HOPS-140_7M_CO2-1.ms'],
+        "HOPS-145": ['HOPS-145_7M_CO2-1.ms'],
+        "HOPS-156": ['HOPS-156_7M_CO2-1.ms'],
+        "HOPS-160": ['HOPS-160_7m_CO2-1_autosplitv2.ms'],
+        "HOPS-163": ['HOPS-163_7m_CO2-1_autosplitv2.ms'],
+        "HOPS-189": ['HOPS-189_7m_CO2-1_autosplitv2.ms'],
+        "HOPS-193": ['HOPS-193_7m_CO2-1_autosplitv2.ms']
+       # "HOPS-17":  ['HOPS_17_7m_13CO_2-1.ms'], # 'HOPS_17_7m_C18O_2-1.ms'],
+       # "HOPS-18":  ['HOPS_18_7m_13CO_2-1.ms'], # 'HOPS_18_7m_C18O_2-1.ms'],
+       # "HOPS-29":  ['HOPS_29_7m_13CO_2-1.ms'], # cambiar lo demas por esto, ignora linea del CO
+       # "HOPS-30":  ['HOPS-30_7m_13CO_2-1_autosplit.ms'],
+       # "HOPS-43":  ['HOPS-43_7m_13CO_2-1_autosplit.ms'],
+       # "HOPS-71":  ['HOPS-71_7m_13CO_2-1_autosplit.ms'],
+       # "HOPS-133": ['HOPS-133_7m_13CO_2-1_autosplit.ms'],
+       # "HOPS-139": ['HOPS-139_7m_13CO_2-1_autosplit.ms'],
+       # "HOPS-140": ['HOPS-140_7M_13CO2-1.ms'],
+       # "HOPS-145": ['HOPS-145_7M_13CO2-1.ms'],
+       # "HOPS-156": ['HOPS-156_7M_13CO2-1.ms'],
+       # "HOPS-160": ['HOPS-160_7m_13CO2-1_autosplitv2.ms'],
+       # "HOPS-163": ['HOPS-163_7m_13CO2-1_autosplitv2.ms'],
+       # "HOPS-189": ['HOPS-189_7m_13CO2-1_autosplitv2.ms'],
+       # "HOPS-193": ['HOPS-193_7m_13CO2-1_autosplitv2.ms']
 }
 # source_names = ['name', 'of', 'the', 'source', 'parallel', 'to', 'inputfiles', ...] # Format HOPS-xyz
 
 spws = { # for 7m array, abnormal spws in [1]
         "13CO" : ['0~6,8~21', '0~21'],
-        "C18O" : ['0~6,8~21', '0~21']
+        "C18O" : ['0~6,8~21', '0~21'],
+        "CO"   : ['0~6,8~21', '0~21']
 }
 
 restfrq_dictionary = { # GHz, 
@@ -126,9 +142,9 @@ def dirty_tclean(line):
         minpb = 0.2
         cell = '0.89arcsec'
         imsize = 120
-        nchan =  1016 # -1
-        start =  other_parameters[line][0] # ''
-        width =  other_parameters[line][2] # ''
+        nchan =  -1 # 1016
+        start =  '' # other_parameters[line][0] # ''
+        width =  '' # other_parameters[line][2] # ''
 
         for source, i in inputfiles.items(): #source tiene el key (el nombre de la lista) en ese momento, i contiene el valor de los elementos (las listas en si)
                 restfreq = restfrq_dictionary[line]
@@ -144,7 +160,7 @@ def dirty_tclean(line):
                                niter=0,interactive=False)
                         wait_completion()
 
-line = str(input("Enter line, only 13CO available: "))
+line = str(input("Enter line: "))
 
 dirty_tclean(line)
 
