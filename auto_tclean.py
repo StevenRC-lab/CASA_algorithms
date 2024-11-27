@@ -3,21 +3,21 @@ import sys # for exit() method
 import time
 
 inputfiles = { # source = "x": i = [x,y,z] # Ahora para C18O 
-        "HOPS-17":  ['HOPS_17_7m_CO_2-1.ms'], # 'HOPS_17_7m_C18O_2-1.ms'],
-        "HOPS-18":  ['HOPS_18_7m_CO_2-1.ms'], # 'HOPS_18_7m_C18O_2-1.ms'],
-        "HOPS-29":  ['HOPS_29_7m_CO_2-1.ms'], # cambiar lo demas por esto, ignora linea del CO
-        "HOPS-30":  ['HOPS-30_7m_CO_2-1_autosplit.ms'],
-        "HOPS-43":  ['HOPS-43_7m_CO_2-1_autosplit.ms'],
-        "HOPS-71":  ['HOPS-71_7m_CO_2-1_autosplit.ms'],
-        "HOPS-133": ['HOPS-133_7m_CO_2-1_autosplit.ms'],
-        "HOPS-139": ['HOPS-139_7m_CO_2-1_autosplit.ms'],
-        "HOPS-140": ['HOPS-140_7M_CO2-1.ms'],
-        "HOPS-145": ['HOPS-145_7M_CO2-1.ms'],
-        "HOPS-156": ['HOPS-156_7M_CO2-1.ms'],
-        "HOPS-160": ['HOPS-160_7m_CO2-1_autosplitv2.ms'],
-        "HOPS-163": ['HOPS-163_7m_CO2-1_autosplitv2.ms'],
-        "HOPS-189": ['HOPS-189_7m_CO2-1_autosplitv2.ms'],
-        "HOPS-193": ['HOPS-193_7m_CO2-1_autosplitv2.ms']
+        "HOPS-17":  ['HOPS_17_7m_C18O_2-1.ms'], # 'HOPS_17_7m_C18O_2-1.ms'],
+        "HOPS-18":  ['HOPS_18_7m_C18O_2-1.ms'], # 'HOPS_18_7m_C18O_2-1.ms'],
+        "HOPS-29":  ['HOPS_29_7m_C18O_2-1.ms'], # cambiar lo demas por esto, ignora linea del CO
+        "HOPS-30":  ['HOPS-30_7m_C18O_2-1_autosplit.ms'],
+        "HOPS-43":  ['HOPS-43_7m_C18O_2-1_autosplit.ms'],
+        "HOPS-71":  ['HOPS-71_7m_C18O_2-1_autosplit.ms'],
+        "HOPS-133": ['HOPS-133_7m_C18O_2-1_autosplit.ms'],
+        "HOPS-139": ['HOPS-139_7m_C18O_2-1_autosplit.ms'],
+        "HOPS-140": ['HOPS-140_7M_C18O2-1.ms'],
+        "HOPS-145": ['HOPS-145_7M_C18O2-1.ms'],
+        "HOPS-156": ['HOPS-156_7M_C18O2-1.ms'],
+        "HOPS-160": ['HOPS-160_7m_C18O2-1_autosplitv2.ms'],
+        "HOPS-163": ['HOPS-163_7m_C18O2-1_autosplitv2.ms'],
+        "HOPS-189": ['HOPS-189_7m_C18O2-1_autosplitv2.ms'],
+        "HOPS-193": ['HOPS-193_7m_C18O2-1_autosplitv2.ms']
        # "HOPS-17":  ['HOPS_17_7m_CO_2-1.ms'], # 'HOPS_17_7m_C18O_2-1.ms'],
        # "HOPS-18":  ['HOPS_18_7m_CO_2-1.ms'], # 'HOPS_18_7m_C18O_2-1.ms'],
        # "HOPS-29":  ['HOPS_29_7m_CO_2-1.ms'], # cambiar lo demas por esto, ignora linea del CO
