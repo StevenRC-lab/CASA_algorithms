@@ -3,21 +3,36 @@ import sys # for exit() method
 import time
 
 inputfiles = { # source = "x": i = [x,y,z] # Ahora para C18O 
-        "HOPS-17":  ['HOPS-17_12m_C18O_ms_contsub'], # 'HOPS_17_7m_C18O_2-1.ms'],
-        "HOPS-18":  ['HOPS-18_12m_C18O_ms_contsub'], # 'HOPS_18_7m_C18O_2-1.ms'],
-        "HOPS-29":  ['HOPS-29_12m_C18O_ms_contsub'], # cambiar lo demas por esto, ignora linea del CO
-        "HOPS-30":  ['HOPS-30_12m_C18O_ms_contsub'],
-        "HOPS-43":  ['HOPS-43_12m_C18O_ms_contsub'],
-        "HOPS-71":  ['HOPS-71_12m_C18O_ms_contsub'],
-        "HOPS-133": ['HOPS-133_12m_C18O_ms_contsub'],
-        "HOPS-139": ['HOPS-139_12m_C18O_ms_contsub'],
-        "HOPS-140": ['HOPS-140_12m_C18O_ms_contsub'],
-        "HOPS-145": ['HOPS-145_12m_C18O_ms_contsub'],
-        "HOPS-156": ['HOPS-156_12m_C18O_ms_contsub'],
-        "HOPS-160": ['HOPS-160_12m_C18O_ms_contsub'],
-        "HOPS-163": ['HOPS-163_12m_C18O_ms_contsub'],
-        "HOPS-189": ['HOPS-189_12m_C18O_ms_contsub'],
-        "HOPS-193": ['HOPS-193_12m_C18O_ms_contsub']
+        "HOPS-17":  ['HOPS-17_12m_13CO2-1_ms_contsub'], # 'HOPS_17_7m_C18O_2-1.ms'],
+        "HOPS-18":  ['HOPS-18_12m_13CO2-1_ms_contsub'], # 'HOPS_18_7m_C18O_2-1.ms'],
+        "HOPS-29":  ['HOPS-29_12m_13CO2-1_ms_contsub'], # cambiar lo demas por esto, ignora linea del CO
+        "HOPS-30":  ['HOPS-30_12m_13CO2-1_ms_contsub'],
+        "HOPS-43":  ['HOPS-43_12m_13CO2-1_ms_contsub'],
+        "HOPS-71":  ['HOPS-71_12m_13CO2-1_ms_contsub'],
+        "HOPS-133": ['HOPS-133_12m_13CO2-1_ms_contsub'],
+        "HOPS-139": ['HOPS-139_12m_13CO2-1_ms_contsub'],
+        "HOPS-140": ['HOPS-140_12m_13CO2-1_ms_contsub'],
+        "HOPS-145": ['HOPS-145_12m_13CO2-1_ms_contsub'],
+        "HOPS-156": ['HOPS-156_12m_13CO2-1_ms_contsub'],
+        "HOPS-160": ['HOPS-160_12m_13CO2-1_ms_contsub'],
+        "HOPS-163": ['HOPS-163_12m_13CO2-1_ms_contsub'],
+        "HOPS-189": ['HOPS-189_12m_13CO2-1_ms_contsub'],
+        "HOPS-193": ['HOPS-193_12m_13CO2-1_ms_contsub']
+        #"HOPS-17":  ['HOPS-17_12m_C18O_ms_contsub'], # 'HOPS_17_7m_C18O_2-1.ms'],
+        #"HOPS-18":  ['HOPS-18_12m_C18O_ms_contsub'], # 'HOPS_18_7m_C18O_2-1.ms'],
+        #"HOPS-29":  ['HOPS-29_12m_C18O_ms_contsub'], # cambiar lo demas por esto, ignora linea del CO
+        #"HOPS-30":  ['HOPS-30_12m_C18O_ms_contsub'],
+        #"HOPS-43":  ['HOPS-43_12m_C18O_ms_contsub'],
+        #"HOPS-71":  ['HOPS-71_12m_C18O_ms_contsub'],
+        #"HOPS-133": ['HOPS-133_12m_C18O_ms_contsub'],
+        #"HOPS-139": ['HOPS-139_12m_C18O_ms_contsub'],
+        #"HOPS-140": ['HOPS-140_12m_C18O_ms_contsub'],
+        #"HOPS-145": ['HOPS-145_12m_C18O_ms_contsub'],
+        #"HOPS-156": ['HOPS-156_12m_C18O_ms_contsub'],
+        #"HOPS-160": ['HOPS-160_12m_C18O_ms_contsub'],
+        #"HOPS-163": ['HOPS-163_12m_C18O_ms_contsub'],
+        #"HOPS-189": ['HOPS-189_12m_C18O_ms_contsub'],
+        #"HOPS-193": ['HOPS-193_12m_C18O_ms_contsub']
         #"HOPS-17":  ['HOPS-17_12m_CO2-1_contsub'], # 'HOPS_17_7m_C18O_2-1.ms'],
         #"HOPS-18":  ['HOPS-18_12m_CO2-1_contsub'], # 'HOPS_18_7m_C18O_2-1.ms'],
         #"HOPS-29":  ['HOPS-29_12m_CO2-1_contsub'], # cambiar lo demas por esto, ignora linea del CO
